@@ -1,0 +1,9 @@
+[
+  {"id": 0, "dev_label": "pistol",           "hm_role": "gun",   "npc_weight": 50, "npc_ammo": 24, "kill_event": "kill_gun"},
+  {"id": 1, "dev_label": "s-uzi",            "hm_role": "gun",   "npc_weight": 20, "npc_ammo": 60, "kill_event": "kill_gun"},
+  {"id": 6, "dev_label": "shotgun",          "hm_role": "gun",   "npc_weight": 15, "npc_ammo": 12, "kill_event": "kill_gun"},
+  {"id": 7, "dev_label": "electro-baton",    "hm_role": "melee", "npc_weight": 15, "npc_ammo": 99, "kill_event": "kill_melee"},
+  {"id": 4, "dev_label": "molotov",          "hm_role": "thrown", "npc_weight": 0,  "npc_ammo": 5,  "kill_event": "kill_other"},
+  {"id": 3, "dev_label": "electro-gun",      "hm_role": "gun",   "npc_weight": 0,  "npc_ammo": 50, "kill_event": "kill_other"},
+  {"id": 9, "dev_label": "silenced s-uzi",   "hm_role": "gun",   "npc_weight": 0,  "npc_ammo": 60, "kill_event": "kill_gun"}
+]

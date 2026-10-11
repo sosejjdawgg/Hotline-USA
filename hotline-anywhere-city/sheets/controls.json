@@ -1,0 +1,14 @@
+[
+  {"action": "move",        "keyboard": "WASD (screen directions)",  "mouse": "-",            "gamepad": "left stick",    "gta2_bits": "0x1 forward + heading", "scope": "on_foot"},
+  {"action": "aim",         "keyboard": "-",                         "mouse": "cursor",       "gamepad": "right stick",   "gta2_bits": "heading at shot time", "scope": "on_foot"},
+  {"action": "attack",      "keyboard": "Ctrl",                      "mouse": "left button",  "gamepad": "RT",            "gta2_bits": "0x10", "scope": "on_foot"},
+  {"action": "enter_exit",  "keyboard": "Enter",                     "mouse": "-",            "gamepad": "Y",             "gta2_bits": "0x20", "scope": "both"},
+  {"action": "jump_brake",  "keyboard": "Space",                     "mouse": "-",            "gamepad": "A",             "gta2_bits": "0x40", "scope": "both"},
+  {"action": "prev_weapon", "keyboard": "Z",                         "mouse": "wheel down",   "gamepad": "LB",            "gta2_bits": "0x80", "scope": "both"},
+  {"action": "next_weapon", "keyboard": "X",                         "mouse": "wheel up",     "gamepad": "RB",            "gta2_bits": "0x100", "scope": "both"},
+  {"action": "accelerate",  "keyboard": "Up",                        "mouse": "-",            "gamepad": "RT",            "gta2_bits": "0x1", "scope": "in_car"},
+  {"action": "brake",       "keyboard": "Down",                      "mouse": "-",            "gamepad": "LT",            "gta2_bits": "0x2", "scope": "in_car"},
+  {"action": "steer",       "keyboard": "Left/Right",                "mouse": "-",            "gamepad": "left stick X",  "gta2_bits": "0x4/0x8", "scope": "in_car"},
+  {"action": "car_fire",    "keyboard": "Ctrl",                      "mouse": "left button",  "gamepad": "X",             "gta2_bits": "0x10", "scope": "in_car"},
+  {"action": "mask_menu",   "keyboard": "Left/Right + Enter",        "mouse": "wheel + click","gamepad": "d-pad/stick + A","gta2_bits": "all blocked while open", "scope": "menu"}
+]

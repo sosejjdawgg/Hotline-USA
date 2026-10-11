@@ -1,0 +1,82 @@
+[
+ {
+  "site": "0x443994",
+  "kind": "punch",
+  "base": 10,
+  "npc_rule": "knockdown",
+  "player_rule": "lethal",
+  "evidence": "lab: NPC fight, amount 10"
+ },
+ {
+  "site": "0x443A9C",
+  "kind": "punch",
+  "base": 10,
+  "npc_rule": "knockdown",
+  "player_rule": "lethal",
+  "evidence": "static: second push 0xA melee call in the same fight routine"
+ },
+ {
+  "site": "0x444C80",
+  "kind": "stomp",
+  "base": 20,
+  "npc_rule": "execution",
+  "player_rule": "lethal",
+  "evidence": "lab: NPC fight and attract demo, amount 20"
+ },
+ {
+  "site": "0x441E13",
+  "kind": "bullet",
+  "base": 50,
+  "npc_rule": "lethal",
+  "player_rule": "shieldable",
+  "evidence": "lab: player pistol hit, amount 50, attacker 1"
+ },
+ {
+  "site": "0x441D16",
+  "kind": "bullet",
+  "base": 0,
+  "npc_rule": "lethal",
+  "player_rule": "shieldable",
+  "evidence": "static: same weapon-hit function as 0x441E13 (amount x5)"
+ },
+ {
+  "site": "0x441DF2",
+  "kind": "bullet",
+  "base": 0,
+  "npc_rule": "lethal",
+  "player_rule": "shieldable",
+  "evidence": "static: same weapon-hit function as 0x441E13 (amount x10)"
+ },
+ {
+  "site": "0x444ABF",
+  "kind": "burn",
+  "base": 1,
+  "npc_rule": "lethal",
+  "player_rule": "lethal",
+  "evidence": "static: push 1 per-tick damage"
+ },
+ {
+  "site": "0x499045",
+  "kind": "impact",
+  "base": 4,
+  "npc_rule": "lethal",
+  "player_rule": "lethal",
+  "evidence": "static: push 4 in object collision code"
+ },
+ {
+  "site": "0x4CF2C0",
+  "kind": "electro",
+  "base": 3,
+  "npc_rule": "lethal",
+  "player_rule": "lethal",
+  "evidence": "static: push 3 in weapon code"
+ },
+ {
+  "site": "other",
+  "kind": "other",
+  "base": 0,
+  "npc_rule": "lethal",
+  "player_rule": "lethal",
+  "evidence": "rule: anything unlisted kills, as in Hotline Miami"
+ }
+]

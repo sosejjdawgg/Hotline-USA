@@ -1,0 +1,11 @@
+[
+  {"event": "kill_melee",     "points": 400, "label_id": 1546, "cash": 40,  "notes": "punch-kill (Tony) or melee weapon kill"},
+  {"event": "execution",      "points": 600, "label_id": 1517, "cash": 60,  "notes": "stomp on a knocked-down ped"},
+  {"event": "kill_gun",       "points": 300, "label_id": 1546, "cash": 30,  "notes": "bullet kill"},
+  {"event": "kill_other",     "points": 200, "label_id": 1546, "cash": 20,  "notes": "fire, explosion, car"},
+  {"event": "double_kill",    "points": 500, "label_id": 1540, "cash": 50,  "notes": "2 kills within 0.5 s"},
+  {"event": "triple_kill",    "points": 800, "label_id": 1541, "cash": 80,  "notes": "3 kills within 0.5 s"},
+  {"event": "multi_kill",     "points": 1200,"label_id": 1542, "cash": 120, "notes": "4+ kills within 0.5 s"},
+  {"event": "combo_step",     "points": 0,   "label_id": 1526, "cash": 0,   "notes": "combo multiplier label 'x combo'; window 3.0 s, mask can extend"},
+  {"event": "stage_clear",    "points": 5000,"label_id": 1513, "cash": 5000, "notes": "HM job cleared"}
+]

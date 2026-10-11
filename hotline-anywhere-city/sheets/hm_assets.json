@@ -1,0 +1,12 @@
+[
+  {"use": "jacket_unarmed", "source": "player_atlas", "anim": 2,   "frames": 8,  "evidence": "lab: contact sheet pick.png, Jacket walking empty-handed"},
+  {"use": "jacket_pistol",  "source": "player_atlas", "anim": 4,   "frames": 8,  "evidence": "lab: contact sheet pick.png, Jacket with pistol"},
+  {"use": "jacket_smg",     "source": "player_atlas", "anim": 26,  "frames": 8,  "evidence": "lab: contact sheet pick.png, Jacket with SMG"},
+  {"use": "jacket_shotgun", "source": "player_atlas", "anim": 33,  "frames": 8,  "evidence": "lab: contact sheet pick.png, Jacket with shotgun"},
+  {"use": "jacket_melee",   "source": "player_atlas", "anim": 14,  "frames": 8,  "evidence": "lab: contact sheet pick.png, Jacket with bat"},
+  {"use": "jacket_punch",   "source": "player_atlas", "anim": 6,   "frames": 6,  "evidence": "lab: contact sheet sel.png, punch swing"},
+  {"use": "jacket_dead",    "source": "player_atlas", "anim": 187, "frames": 4,  "evidence": "lab: contact sheet pick.png, Jacket lying dead"},
+  {"use": "mask_icons",     "source": "player_atlas", "anim": 100, "frames": 27, "evidence": "lab: a100.png, frame n = mask n in HM's mask order"},
+  {"use": "music",          "source": "hm_folder",    "anim": -1,  "frames": 0,  "evidence": "lab: 23 .ogg files in the HM folder"},
+  {"use": "text",           "source": "localization", "anim": -1,  "frames": 0,  "evidence": "lab: 1902 English strings parsed; ids in masks/scoring/jobs"}
+]

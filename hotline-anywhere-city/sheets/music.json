@@ -1,0 +1,23 @@
+[
+  {"key": "radio_1",  "file": "ElectricDreams.ogg", "context": "car_radio", "loop": 0},
+  {"key": "radio_2",  "file": "Crystals.ogg",       "context": "car_radio", "loop": 0},
+  {"key": "radio_3",  "file": "Daisuke.ogg",        "context": "car_radio", "loop": 0},
+  {"key": "radio_4",  "file": "Flatline.ogg",       "context": "car_radio", "loop": 0},
+  {"key": "radio_5",  "file": "Musikk2.ogg",        "context": "car_radio", "loop": 0},
+  {"key": "radio_6",  "file": "ToTheTop.ogg",       "context": "car_radio", "loop": 0},
+  {"key": "radio_7",  "file": "SilverLights.ogg",   "context": "car_radio", "loop": 0},
+  {"key": "radio_8",  "file": "ANewMorning.ogg",    "context": "car_radio", "loop": 0},
+  {"key": "radio_9",  "file": "Release.ogg",        "context": "car_radio", "loop": 0},
+  {"key": "radio_10", "file": "Static.ogg",         "context": "car_radio", "loop": 0},
+  {"key": "rampage_1","file": "Hydrogen.ogg",       "context": "rampage",   "loop": 1},
+  {"key": "rampage_2","file": "Paris2.ogg",         "context": "rampage",   "loop": 1},
+  {"key": "rampage_3","file": "Miami2.ogg",         "context": "rampage",   "loop": 1},
+  {"key": "job_1",    "file": "Knock.ogg",          "context": "job",       "loop": 1},
+  {"key": "job_2",    "file": "InnerAnimal.ogg",    "context": "job",       "loop": 1},
+  {"key": "job_3",    "file": "DeepCover.ogg",      "context": "job",       "loop": 1},
+  {"key": "job_4",    "file": "Perturbator.ogg",    "context": "job",       "loop": 1},
+  {"key": "job_5",    "file": "Crush.ogg",          "context": "job",       "loop": 1},
+  {"key": "masks",    "file": "HorseSteppin.ogg",   "context": "mask_menu", "loop": 1},
+  {"key": "clear",    "file": "ItsSafeNow.ogg",     "context": "stage_clear","loop": 1},
+  {"key": "phone",    "file": "Hotline.ogg",        "context": "phonecall", "loop": 1}
+]

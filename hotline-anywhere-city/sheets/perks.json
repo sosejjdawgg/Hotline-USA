@@ -1,0 +1,23 @@
+[
+  {"id": "none",              "system": "masks",  "how": "nothing", "evidence": "n/a: no effect"},
+  {"id": "reveal_jobs",       "system": "jobs",   "how": "job markers drawn with distance at any range (otherwise only within 12 blocks)", "evidence": "lab-pending"},
+  {"id": "lethal_fists",      "system": "combat", "how": "PedDamage: punch site lethal for NPC victims", "evidence": "lab-pending"},
+  {"id": "more_guns",         "system": "npcs",   "how": "npc_arming chance multiplied by param", "evidence": "lab-pending"},
+  {"id": "lethal_doors",      "system": "combat", "how": "on leaving a car: Die() every ped within param blocks", "evidence": "lab-pending"},
+  {"id": "walk_fast",         "system": "player", "how": "player ped speed byte raised by param while on foot", "evidence": "lab-pending"},
+  {"id": "start_weapon",      "system": "player", "how": "AddWeapon(param, 99) when the mask is put on", "evidence": "lab-pending"},
+  {"id": "look_further",      "system": "camera", "how": "camera zoom target raised", "evidence": "lab-pending"},
+  {"id": "cops_ignore",       "system": "wanted", "how": "player copValue clamped to one star", "evidence": "lab-pending"},
+  {"id": "shield",            "system": "combat", "how": "PedDamage: first param bullet hits on the player are absorbed", "evidence": "lab-pending"},
+  {"id": "extra_ammo",        "system": "player", "how": "ammo increases (pickups) multiplied by param", "evidence": "lab-pending"},
+  {"id": "rip_and_steal",     "system": "combo",  "how": "player kill adds param ammo to selected weapon", "evidence": "lab-pending"},
+  {"id": "quiet_gunshots",    "system": "wanted", "how": "ShootWeapon: copValue restored after the player's shot", "evidence": "lab-pending"},
+  {"id": "longer_combo",      "system": "combo",  "how": "combo window x param/100", "evidence": "lab-pending"},
+  {"id": "darkness",          "system": "render", "how": "gbh_SetAmbient lowered each frame", "evidence": "lab-pending"},
+  {"id": "fast_reload",       "system": "player", "how": "selected weapon timeToReload zeroed each tick", "evidence": "lab-pending"},
+  {"id": "electrofingers",    "system": "player", "how": "GivePowerUp(ELECTROFINGERS) when the mask is put on", "evidence": "lab-pending"},
+  {"id": "hard_to_spot",      "system": "wanted", "how": "copValue increases scaled by param/100", "evidence": "lab-pending"},
+  {"id": "french",            "system": "hud",    "how": "mashup text taken from HM's French table instead of English", "evidence": "lab-pending"},
+  {"id": "reversed_controls", "system": "input",  "how": "on-foot move vector negated", "evidence": "lab-pending"},
+  {"id": "more_gore",         "system": "combo",  "how": "param blood objects spawned at each player kill", "evidence": "lab-pending"}
+]

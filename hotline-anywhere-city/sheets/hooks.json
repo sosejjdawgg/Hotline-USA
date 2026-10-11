@@ -1,0 +1,137 @@
+[
+ {
+  "id": "GameTick",
+  "kind": "hook",
+  "addr": "0x45C1F0",
+  "conv": "thiscall",
+  "prologue": "538BD956578A",
+  "purpose": "per-tick update: combat rules, combo timer, masks, jobs, music",
+  "evidence": "lab: tick log every 300 ticks while playing"
+ },
+ {
+  "id": "PedDamage",
+  "kind": "hook",
+  "addr": "0x4419E0",
+  "conv": "thiscall_i16",
+  "prologue": "33D266399108",
+  "purpose": "every ped health loss: HM lethality, knockdowns, shields",
+  "evidence": "lab: punch/kick/pistol hits logged with call sites"
+ },
+ {
+  "id": "PedDie",
+  "kind": "hook",
+  "addr": "0x4411B0",
+  "conv": "thiscall",
+  "prologue": "568BF1F6861F",
+  "purpose": "every death: kill credit via ped+0x204 attacker id, combo",
+  "evidence": "lab: hook installed"
+ },
+ {
+  "id": "DecodeKeys",
+  "kind": "hook",
+  "addr": "0x4A4AE0",
+  "conv": "thiscall",
+  "prologue": "568B71048A51",
+  "purpose": "player key bitmask -> key flags: inject twin-stick/WASD, block input in menus",
+  "evidence": "static: disassembly decodes player+4 bits into +0x78.."
+ },
+ {
+  "id": "ShootWeapon",
+  "kind": "hook",
+  "addr": "0x4D0530",
+  "conv": "thiscall",
+  "prologue": "568BF1578B46",
+  "purpose": "aim shots at cursor/right stick; quiet gunshots perk",
+  "evidence": "static: seuko map ShootFromWeapon + prologue"
+ },
+ {
+  "id": "DrawUI",
+  "kind": "hook",
+  "addr": "0x4CA440",
+  "conv": "thiscall",
+  "prologue": "A064AD5E0056",
+  "purpose": "HM HUD text with GTA 2 font inside its UI pass",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "SpawnPed",
+  "kind": "call",
+  "addr": "0x43DB40",
+  "conv": "stdcall",
+  "prologue": "8B0DBC5B5E00",
+  "purpose": "spawn job enemies",
+  "evidence": "lab: spawned peds next to player"
+ },
+ {
+  "id": "AddWeapon",
+  "kind": "call",
+  "addr": "0x43E4B0",
+  "conv": "thiscall",
+  "prologue": "8A4424085356",
+  "purpose": "give weapons (mask start weapons, armed NPCs)",
+  "evidence": "lab: player got pistol x50"
+ },
+ {
+  "id": "SetPedWeapon",
+  "kind": "call",
+  "addr": "0x43D830",
+  "conv": "thiscall",
+  "prologue": "568BF1E8F88F",
+  "purpose": "make NPC hold its weapon",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "SetObjective",
+  "kind": "call",
+  "addr": "0x43BBC0",
+  "conv": "thiscall",
+  "prologue": "568BF1578B7C",
+  "purpose": "job enemies hunt the player",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "SpawnObject",
+  "kind": "call",
+  "addr": "0x4852E0",
+  "conv": "thiscall",
+  "prologue": "8B4424148B54",
+  "purpose": "job pickup marker objects, gore",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "WorldToScreen",
+  "kind": "call",
+  "addr": "0x40CFC0",
+  "conv": "thiscall",
+  "prologue": "83EC108D5424",
+  "purpose": "place Jacket/markers on screen",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "GivePowerUp",
+  "kind": "call",
+  "addr": "0x4A5780",
+  "conv": "thiscall",
+  "prologue": "8B4424045683",
+  "purpose": "Charlie electrofingers perk",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "DrawGTAText",
+  "kind": "call",
+  "addr": "0x4CC100",
+  "conv": "stdcall",
+  "prologue": "83EC448A4424",
+  "purpose": "HUD text",
+  "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "EndSceneSlot",
+  "kind": "slot",
+  "addr": "0x595318",
+  "conv": "stdcall_double",
+  "prologue": "-",
+  "purpose": "gbh_EndScene pointer in GTA 2's renderer table: draw Jacket and mask icons before the frame ends",
+  "evidence": "lab-pending"
+ }
+]

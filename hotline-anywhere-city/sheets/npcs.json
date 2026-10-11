@@ -1,0 +1,26 @@
+[
+ {
+  "rule": "armed_civilians",
+  "occupations": "3",
+  "chance_pct": 12,
+  "aggressive_pct": 25,
+  "evidence": "lab-pending",
+  "notes": "plain pedestrians sometimes carry a gun; some open fire when you come close"
+ },
+ {
+  "rule": "armed_criminals",
+  "occupations": "14,15,16,17,18,19,33,34",
+  "chance_pct": 45,
+  "aggressive_pct": 60,
+  "evidence": "lab-pending",
+  "notes": "psychos, muggers, car thieves, robbers, gang members"
+ },
+ {
+  "rule": "job_enemy",
+  "occupations": "-2",
+  "chance_pct": 100,
+  "aggressive_pct": 100,
+  "evidence": "lab-pending",
+  "notes": "spawned by an HM job in Russian-mob clothes (remap 10); always armed, hunts the player"
+ }
+]
