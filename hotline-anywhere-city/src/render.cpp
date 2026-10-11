@@ -1,5 +1,5 @@
 // Hotline Miami sprites drawn into GTA 2's own Direct3D 6 frame (sheets/hm_assets.json): Jacket over the
-// player, the worn mask, and the big mask icon in the mask menu. Frames are cut from the player's own
+// player, the worn mask, the big mask icon in the mask menu, and HM's crosshair and lock-on reticle. Frames are cut from the player's own
 // HM atlas at runtime and uploaded as textures; nothing is stored on disk.
 #define INITGUID
 #include "core.h"
@@ -17,6 +17,9 @@ static DDPIXELFORMAT g_pf;
 
 struct Tex { int anim, frame; IDirectDrawSurface4* surf; IDirect3DTexture2* tex; int w, h, tw, th; };
 static Tex g_tex[96]; static int g_texN;
+static DWORD g_jacketAt;            // last frame Jacket was drawn (GTA 2's own player sprite stays hidden meanwhile)
+
+bool jacketShown() { return g_jacketAt && GetTickCount() - g_jacketAt < 300; }
 
 static Graphics* gfx() {
     HMODULE m = GetModuleHandleA("d3ddll.dll");
@@ -89,6 +92,67 @@ static void quad(IDirect3DDevice3* dev, Tex* t, float cx, float cy, float scale,
     dev->DrawPrimitive(D3DPT_TRIANGLEFAN, D3DFVF_TLVERTEX, v, 4, 0);
 }
 
+// one flat coloured bar centred on (cx, cy), rotated by `angle` radians
+static void bar(IDirect3DDevice3* dev, float cx, float cy, float w, float h, float angle, uint32_t color) {
+    float hw = w * 0.5f, hh = h * 0.5f, c = cosf(angle), s = sinf(angle);
+    float corner[4][2] = {{-hw, -hh}, {hw, -hh}, {hw, hh}, {-hw, hh}};
+    D3DTLVERTEX v[4];
+    for (int i = 0; i < 4; i++) {
+        float x = corner[i][0], y = corner[i][1];
+        v[i].sx = cx + x * c - y * s; v[i].sy = cy + x * s + y * c; v[i].sz = 0.0f; v[i].rhw = 1.0f;
+        v[i].color = color; v[i].specular = 0; v[i].tu = 0; v[i].tv = 0;
+    }
+    dev->SetTexture(0, nullptr);
+    dev->DrawPrimitive(D3DPT_TRIANGLEFAN, D3DFVF_TLVERTEX, v, 4, 0);
+}
+
+// HM colours: the cursor cycles hot pink -> violet -> cyan
+static uint32_t hmColour(DWORD now, int phase) {
+    static const uint32_t cols[] = {0xFFFF2E9A, 0xFFB43CFF, 0xFF2EE6FF, 0xFFB43CFF};
+    return cols[((now / 90) + phase) % 4];
+}
+
+// HM's crosshair: four short bars round a gap, black outline, pulsing; a lock adds turning corner brackets.
+static void drawCrosshair(IDirect3DDevice3* dev, float x, float y, float ui, bool locked, DWORD now) {
+    float pulse = 1.0f + 0.12f * sinf(now / 110.0f);
+    float gap = (locked ? 6.0f : 4.0f) * ui * pulse, len = 6.0f * ui, th = 2.0f * ui, o = 1.0f * ui;
+    uint32_t col = hmColour(now, 0);
+    for (int pass = 0; pass < 2; pass++) {
+        uint32_t c = pass ? col : 0xC0000000;
+        float e = pass ? 0 : o * 2;
+        for (int k = 0; k < 4; k++) {
+            float a = k * 1.5707963f, dx = cosf(a), dy = sinf(a), d = gap + len * 0.5f;
+            bar(dev, x + dx * d, y + dy * d, (k % 2 ? th : len) + e, (k % 2 ? len : th) + e, 0, c);
+        }
+        bar(dev, x, y, th + e, th + e, 0, c);
+    }
+    if (!locked) return;
+    float r = 15.0f * ui, arm = 6.0f * ui, spin = now / 400.0f;
+    for (int pass = 0; pass < 2; pass++) {
+        uint32_t c = pass ? hmColour(now, 2) : 0xC0000000;
+        float e = pass ? 0 : o * 2;
+        for (int k = 0; k < 4; k++) {
+            float a = spin + k * 1.5707963f + 0.785398f, cx = x + cosf(a) * r, cy = y + sinf(a) * r;
+            // an L at each corner of a turning square
+            float a1 = a + 3.1415926f * 0.75f, a2 = a - 3.1415926f * 0.75f;
+            bar(dev, cx + cosf(a1) * arm * 0.5f, cy + sinf(a1) * arm * 0.5f, arm + e, th + e, a1, c);
+            bar(dev, cx + cosf(a2) * arm * 0.5f, cy + sinf(a2) * arm * 0.5f, arm + e, th + e, a2, c);
+        }
+    }
+}
+
+// The frame GTA 2 renders can differ from the window it is shown in (window wrappers scale it):
+// draw in the render target's pixels.
+static void targetSize(IDirect3DDevice3* dev, float* w, float* h) {
+    RECT rc; GetClientRect(gta::window(), &rc);
+    *w = (float)rc.right; *h = (float)rc.bottom;
+    IDirectDrawSurface4* target = nullptr;
+    if (FAILED(dev->GetRenderTarget(&target)) || !target) return;
+    DDSURFACEDESC2 sd = {}; sd.dwSize = sizeof sd;
+    if (SUCCEEDED(target->GetSurfaceDesc(&sd)) && sd.dwWidth && sd.dwHeight) { *w = (float)sd.dwWidth; *h = (float)sd.dwHeight; }
+    target->Release();
+}
+
 static int assetAnim(Asset a) { for (const AssetRow& r : kAssets) if (r.use == a) return r.anim; return -1; }
 
 static void draw() {
@@ -105,8 +169,13 @@ static void draw() {
     dev->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_INVSRCALPHA); dev->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_NONE);
     dev->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTFG_POINT); dev->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTFN_POINT);
 
-    RECT rc; GetClientRect(at<HWND>(0x673D18), &rc);
-    float W = (float)rc.right, H = (float)rc.bottom, ui = H / 480.0f;
+    RECT rc; GetClientRect(gta::window(), &rc);
+    float W, H;
+    targetSize(dev, &W, &H);
+    float ui = H / 480.0f;
+    float kx = rc.right ? W / rc.right : 1.0f, ky = rc.bottom ? H / rc.bottom : 1.0f; // client pixels -> target pixels
+    static bool sizeLogged;
+    if (!sizeLogged && rc.right) { sizeLogged = true; logf("render: frame %.0fx%.0f in a %ldx%ld window", W, H, rc.right, rc.bottom); }
     uintptr_t pp = gta::playerPed();
     DWORD now = GetTickCount();
     int icons = assetAnim(Asset::mask_icons);
@@ -120,6 +189,7 @@ static void draw() {
     if (pp && !at<uintptr_t>(pp + gta::PED_CAR)) {
         float sx, sy;
         if (gta::playerScreen(&sx, &sy)) {
+            sx *= kx; sy *= ky;
             int weapon = -1; uintptr_t w = at<uintptr_t>(pp + gta::PED_WEAPON);
             if (w) weapon = at<int>(w + gta::WEAPON_ID);
             Asset a = weapon < 0 ? Asset::jacket_unarmed : weapon == 0 || weapon == 10 ? Asset::jacket_pistol : weapon == 1 || weapon == 9 ? Asset::jacket_smg
@@ -135,8 +205,11 @@ static void draw() {
             float ang = (360 - gta::heading(pp)) * 3.14159265f / 720.0f;
             int aim;
             if (input::aiming(&aim) && !dead) ang = (360 - aim) * 3.14159265f / 720.0f;
-            if (t) quad(dev, t, sx, sy, gta::spriteScale() * ui, ang);
+            if (t) { quad(dev, t, sx, sy, gta::spriteScale() * ui, ang); g_jacketAt = now; }
         }
+        float cx, cy; bool pad;
+        if (!masks::menuOpen() && at<uint16_t>(pp + gta::PED_HEALTH) && input::crosshair(&cx, &cy, &pad))
+            drawCrosshair(dev, cx * kx, cy * ky, ui, input::lockTarget() != 0, now);
     }
     dev->SetRenderState(D3DRENDERSTATE_ZENABLE, st[0]); dev->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, st[1]);
     dev->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, st[2]); dev->SetRenderState(D3DRENDERSTATE_SRCBLEND, st[3]);

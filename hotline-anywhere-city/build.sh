@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")"
 ZIG="${ZIG:-$LOCALAPPDATA/hac-tools/zig-windows-x86_64-0.13.0/zig.exe}"
 T=${1:-hac}
-python tools/sheets.py gen > build-preflight.txt || { cat build-preflight.txt; exit 1; }
+"${PY:-python}" tools/sheets.py gen > build-preflight.txt || { cat build-preflight.txt; exit 1; }
 mkdir -p build
 for f in third_party/minhook/src/hook.c third_party/minhook/src/buffer.c third_party/minhook/src/trampoline.c third_party/minhook/src/hde/hde32.c; do
   "$ZIG" cc -target x86-windows-gnu -O2 -c "$f" -o "build/$(basename "$f" .c).o" -Ithird_party/minhook/include

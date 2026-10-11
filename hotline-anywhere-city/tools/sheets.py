@@ -59,7 +59,8 @@ def preflight(data):
                     errors.append(f"{tag}.{col}: '{s}' is not a number")
                 elif typ == "hex" and not re.fullmatch(r"0x[0-9A-Fa-f]+", s):
                     errors.append(f"{tag}.{col}: '{s}' is not hex")
-                elif typ == "hexbytes" and not (s == "-" and row.get("kind") == "slot") and not re.fullmatch(r"([0-9A-F]{2})+", s):
+                elif typ == "hexbytes" and not (s == "-" and row.get("kind") == "slot") and not re.fullmatch(r"([0-9A-F]{2})+", s) \
+                        and not re.fullmatch(r"~([0-9A-F?]{2})+(\|~([0-9A-F?]{2})+)*", s):
                     errors.append(f"{tag}.{col}: '{s}' is not a byte string")
                 elif typ == "site" and not (s == "other" or re.fullmatch(r"0x[0-9A-Fa-f]+", s)):
                     errors.append(f"{tag}.{col}: '{s}' is not a call site")
@@ -159,7 +160,7 @@ def gen(data):
     out.append("};")
     out.append("template <class T, int N> constexpr int countof(const T (&)[N]) { return N; }")
     os.makedirs(os.path.join(ROOT, "src", "gen"), exist_ok=True)
-    open(os.path.join(ROOT, "src", "gen", "sheets.h"), "w", encoding="utf-8").write("\n".join(out) + "\n")
+    open(os.path.join(ROOT, "src", "gen", "sheets.h"), "w", encoding="utf-8", newline="\r\n").write("\n".join(out) + "\n")
 
 
 if __name__ == "__main__":

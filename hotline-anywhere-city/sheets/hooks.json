@@ -36,15 +36,6 @@
   "evidence": "static: disassembly decodes player+4 bits into +0x78.."
  },
  {
-  "id": "ShootWeapon",
-  "kind": "hook",
-  "addr": "0x4D0530",
-  "conv": "thiscall",
-  "prologue": "568BF1578B46",
-  "purpose": "aim shots at cursor/right stick; quiet gunshots perk",
-  "evidence": "static: seuko map ShootFromWeapon + prologue"
- },
- {
   "id": "DrawUI",
   "kind": "hook",
   "addr": "0x4CA440",
@@ -52,6 +43,24 @@
   "prologue": "A064AD5E0056",
   "purpose": "HM HUD text with GTA 2 font inside its UI pass",
   "evidence": "static: seuko map + prologue"
+ },
+ {
+  "id": "ManageWeapon",
+  "kind": "hook",
+  "addr": "0x445230",
+  "conv": "thiscall",
+  "prologue": "~68010000|~2E010000",
+  "purpose": "the ped's per-tick weapon step: the player's gun fires (and fists hit) toward the aim while Jacket walks another way",
+  "evidence": "lab-pending: gta2_re functions_data.json pairs Ped::ManageWeapon_46F390 (10.5) with 9.6f 0x445230 (hand-checked); body reads ped+0x168 and writes ped+0x12E aim angle"
+ },
+ {
+  "id": "SpriteTreeAdd",
+  "kind": "hook",
+  "addr": "0x4C4BF0",
+  "conv": "thiscall",
+  "prologue": "~83??2809",
+  "purpose": "queues each visible sprite for drawing: leave GTA 2's player sprite out while Jacket is drawn",
+  "evidence": "lab-pending: gta2_re pairs SpriteTree_4::AddSprite_5C5CF0 with 9.6f 0x4C4BF0 (neighbours Draw 0x4C4D20, Reset 0x4C4D60 hand-checked); body compares sprite+0x28 with 9"
  },
  {
   "id": "SpawnPed",

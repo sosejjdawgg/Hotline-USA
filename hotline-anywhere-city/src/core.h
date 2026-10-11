@@ -11,6 +11,7 @@ extern char g_modDir[MAX_PATH];   // folder holding HotlineCity.asi (GTA 2\scrip
 extern char g_hmDir[MAX_PATH];    // Hotline Miami install (from Melty's HAC_HM_DIR)
 extern bool g_testMode;           // HAC_TEST=1 (or HotlineCity-test.flag): scripted checks write HotlineCity-test.log
 extern bool g_autostart;          // press Enter through the frontend until a game starts (test mode, lab)
+int setting(const char* section, const char* key, int def); // HotlineCity.ini next to the plugin
 
 // ---- raw memory ------------------------------------------------------------------------------
 template <class T> static inline T& at(uintptr_t p) { return *(T*)p; }
@@ -59,7 +60,9 @@ uintptr_t spawnObject(int type, int x, int y, int z);
 void givePowerUp(int type);
 void drawText(const wchar_t* s, float x, float y, float scale, int remap); // virtual 640x480 UI coords
 bool worldToScreen(int x, int y, int z, float* sx, float* sy);              // GTA 2 UI units (640x480 virtual)
+bool screenOf(int x, int y, int z, float* px, float* py);                    // world -> client pixels
 bool playerScreen(float* px, float* py);                                     // client pixels
+static inline HWND window() { return at<HWND>(0x673D18); }
 float spriteScale();
 float uiWidth();                                                            // UI units across the window (640 at 4:3)                                                        // HM pixels -> client pixels at the current zoom
 void addMoney(int amount);
@@ -102,7 +105,9 @@ namespace masks  { void tick(); void drawHud(); bool menuOpen(); int current(); 
 namespace jobs   { void tick(); void drawHud(); int active(); void start(int job); bool clearedRecently(); }
 namespace npcs   { void tick(); }
 namespace music  { void init(); void tick(); void play(MusicCtx ctx, int track = -1); void stop(); MusicCtx context(); DWORD msInContext(); }
-namespace input  { void init(); uint32_t filterKeys(uint32_t keys); void tick(); bool aiming(int* heading); void menuInput(int* dir, bool* ok); void force(uint32_t keys, int ticks, int heading); }
-namespace render { void endScene(); void tick(); }
+namespace input  { void init(); uint32_t filterKeys(uint32_t keys); void tick(); bool aiming(int* heading); void menuInput(int* dir, bool* ok); void force(uint32_t keys, int ticks, int heading);
+                   void setStrafe(bool ok); bool crosshair(float* x, float* y, bool* padAim); uintptr_t lockTarget(); }
+namespace render { void endScene(); void tick(); bool jacketShown(); }
+namespace display { void init(); }
 namespace lab    { void tick(); }
 namespace test   { void init(); void tick(); void check(const char* name, bool ok, const char* detail = ""); void onDamage(uintptr_t ped, int amount, int passed, uint32_t site); }

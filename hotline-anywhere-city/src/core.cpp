@@ -22,6 +22,12 @@ void logf(const char* fmt, ...) {
     fputc('\n', g_log); fflush(g_log);
 }
 
+int setting(const char* section, const char* key, int def) {
+    char ini[MAX_PATH];
+    snprintf(ini, sizeof ini, "%s\\HotlineCity.ini", g_modDir);
+    return GetPrivateProfileIntA(section, key, def, ini);
+}
+
 namespace gta {
 
 const char* mapName() {
@@ -113,13 +119,16 @@ float uiWidth() {
 }
 
 // Calibrated in the lab: see sheets/hooks.json WorldToScreen evidence.
-bool playerScreen(float* px, float* py) {
-    uintptr_t pp = playerPed();
+bool screenOf(int x, int y, int z, float* px, float* py) {
     float ux, uy;
-    if (!pp || !worldToScreen(at<int>(pp + PED_X), at<int>(pp + PED_Y), at<int>(pp + PED_Z), &ux, &uy)) return false;
-    RECT rc; GetClientRect(at<HWND>(0x673D18), &rc);
+    if (!worldToScreen(x, y, z, &ux, &uy)) return false;
+    RECT rc; GetClientRect(window(), &rc);
     *px = ux * rc.right / uiWidth(); *py = uy * rc.bottom / 480.0f;
     return true;
+}
+bool playerScreen(float* px, float* py) {
+    uintptr_t pp = playerPed();
+    return pp && screenOf(at<int>(pp + PED_X), at<int>(pp + PED_Y), at<int>(pp + PED_Z), px, py);
 }
 float spriteScale() { return 1.0f; }
 
